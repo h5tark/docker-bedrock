@@ -1,0 +1,37 @@
+version: '2'
+services:
+  nginx:
+    image: hoangstark/bedrock-nginx:latest
+    ports:
+     - "80:80"
+    volumes:
+     - .:/usr/share/nginx/html
+    networks:
+     - wpnet
+  php:
+    image: hoangstark/bedrock-php:latest
+    volumes:
+     - .:/usr/share/nginx/html
+    ports:
+     - "9000:9000"
+    networks:
+     - wpnet
+  mysql:
+    image: mysql:5.7
+    ports:
+     - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: secret
+    volumes:
+     - ./web/app/uploads/docker-mysqldb:/var/lib/mysql
+    networks:
+     - wpnet
+networks:
+  wpnet:
+    driver: "bridge"
+volumes:
+  data:
+    driver: "local"
