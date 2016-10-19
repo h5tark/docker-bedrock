@@ -12,8 +12,6 @@ services:
     image: hoangstark/bedrock-php:latest
     volumes:
      - .:/usr/share/nginx/html
-    ports:
-     - "9000:9000"
     networks:
      - wpnet
   mysql:
